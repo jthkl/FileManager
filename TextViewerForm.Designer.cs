@@ -36,21 +36,23 @@ namespace FileManager
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.pnlLineNumbers = new System.Windows.Forms.Panel();
             this.pnlLineNumbersCanvas = new System.Windows.Forms.Panel();
-            this.txtContent = new ScrollingRichTextBox();
+            this.txtContent = new FileManager.ScrollingRichTextBox();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.btnOpenDefault = new System.Windows.Forms.Button();
+            this.pnlLineNumbers.SuspendLayout();
+            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlLineNumbers
             // 
             this.pnlLineNumbers.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlLineNumbers.Controls.Add(this.pnlLineNumbersCanvas);
             this.pnlLineNumbers.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlLineNumbers.Location = new System.Drawing.Point(0, 0);
             this.pnlLineNumbers.Name = "pnlLineNumbers";
-            this.pnlLineNumbers.Size = new System.Drawing.Size(50, 400);
+            this.pnlLineNumbers.Size = new System.Drawing.Size(50, 583);
             this.pnlLineNumbers.TabIndex = 0;
             // 
             // pnlLineNumbersCanvas
@@ -60,7 +62,6 @@ namespace FileManager
             this.pnlLineNumbersCanvas.Size = new System.Drawing.Size(50, 400);
             this.pnlLineNumbersCanvas.TabIndex = 1;
             this.pnlLineNumbersCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlLineNumbersCanvas_Paint);
-            this.pnlLineNumbers.Controls.Add(this.pnlLineNumbersCanvas);
             // 
             // txtContent
             // 
@@ -70,40 +71,46 @@ namespace FileManager
             this.txtContent.Font = new System.Drawing.Font("Consolas", 10F);
             this.txtContent.Location = new System.Drawing.Point(50, 0);
             this.txtContent.Name = "txtContent";
-            this.txtContent.Size = new System.Drawing.Size(750, 400);
+            this.txtContent.Size = new System.Drawing.Size(750, 583);
             this.txtContent.TabIndex = 2;
             this.txtContent.Text = "";
             this.txtContent.WordWrap = false;
             // 
             // pnlBottom
             // 
+            this.pnlBottom.Controls.Add(this.btnOpenDefault);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Height = 40;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 583);
             this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(800, 40);
             this.pnlBottom.TabIndex = 3;
             // 
             // btnOpenDefault
             // 
             this.btnOpenDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenDefault.Location = new System.Drawing.Point(650, 6);
+            this.btnOpenDefault.Enabled = false;
+            this.btnOpenDefault.Location = new System.Drawing.Point(521, 6);
             this.btnOpenDefault.Name = "btnOpenDefault";
-            this.btnOpenDefault.Size = new System.Drawing.Size(120, 28);
+            this.btnOpenDefault.Size = new System.Drawing.Size(249, 28);
             this.btnOpenDefault.TabIndex = 0;
-            this.btnOpenDefault.Text = "用默认程序打开(&O)";
+            this.btnOpenDefault.Text = "用默认程序打开当前文件(&O)";
             this.btnOpenDefault.UseVisualStyleBackColor = true;
             this.btnOpenDefault.Click += new System.EventHandler(this.BtnOpenDefault_Click);
-            this.pnlBottom.Controls.Add(this.btnOpenDefault);
             // 
             // TextViewerForm
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 440);
+            this.ClientSize = new System.Drawing.Size(800, 623);
             this.Controls.Add(this.txtContent);
             this.Controls.Add(this.pnlLineNumbers);
             this.Controls.Add(this.pnlBottom);
             this.Name = "TextViewerForm";
             this.Text = "Text 查看器";
+            this.pnlLineNumbers.ResumeLayout(false);
+            this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion

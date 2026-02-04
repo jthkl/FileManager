@@ -35,6 +35,9 @@ namespace FileManager
             }
             catch { /* 忽略在设计器/不同平台可能抛出的错误 */ }
 
+            // 把打开按钮初始设为不可用（当没有有效文件）
+            try { btnOpenDefault.Enabled = false; } catch { }
+
             // 事件绑定（确保只有一次订阅）
             txtContent.VScrolled -= TxtContent_VScrolled;
             txtContent.VScrolled += TxtContent_VScrolled;
@@ -55,10 +58,12 @@ namespace FileManager
             {
                 txtContent.Text = "";
                 this.Text = "Text 查看器";
+                btnOpenDefault.Enabled = false;
                 return;
             }
 
             this.Text = $"Text 查看器 - {Path.GetFileName(_filePath)}";
+            btnOpenDefault.Enabled = File.Exists(_filePath);
             _ = LoadFileAsync(_filePath);
         }
 
@@ -67,6 +72,7 @@ namespace FileManager
             if (!File.Exists(path))
             {
                 MessageBox.Show("文件不存在或无法访问。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnOpenDefault.Enabled = false;
                 return;
             }
 
@@ -81,6 +87,7 @@ namespace FileManager
                         AdjustLineNumberWidthAndCanvas();
                         // 初始同步位置
                         SyncLineNumbersToText();
+                        btnOpenDefault.Enabled = true;
                     }));
                 }
                 else
@@ -88,11 +95,13 @@ namespace FileManager
                     txtContent.Text = content;
                     AdjustLineNumberWidthAndCanvas();
                     SyncLineNumbersToText();
+                    btnOpenDefault.Enabled = true;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"读取文件失败：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                try { btnOpenDefault.Enabled = false; } catch { }
             }
         }
 
@@ -249,7 +258,19 @@ namespace FileManager
 
         private void BtnOpenDefault_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(_filePath)) return;
+            if (string.IsNullOrEmpty(_filePath))
+            {
+                MessageBox.Show("当前没有要打开的文件。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (!File.Exists(_filePath))
+            {
+                MessageBox.Show("文件不存在或无法访问。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnOpenDefault.Enabled = false;
+                return;
+            }
+
             try
             {
                 var psi = new ProcessStartInfo(_filePath) { UseShellExecute = true };
