@@ -197,7 +197,7 @@
             // 
             this.btnRemoveFile.Name = "btnRemoveFile";
             this.btnRemoveFile.Size = new System.Drawing.Size(86, 28);
-            this.btnRemoveFile.Text = "删除记录";
+            this.btnRemoveFile.Text = "删除文件";
             this.btnRemoveFile.Click += new System.EventHandler(this.btnRemoveFile_Click);
             // 
             // btnEditDesc
